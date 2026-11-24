@@ -10,14 +10,12 @@ rm -rf "$OUT"
 mkdir -p "$OUT/photos" "$OUT/video"
 
 # Photos: p01..p48 follow the sorted order of the source JPGs (see docs/ASSET_INVENTORY.md).
-# Exclusions are not exported at all:
-#   p01-p05  premiere/event photos with a third-party film backdrop, sponsor logos and public figures
-#   p47-p48  event posters with third-party celebrity names and reservation phone numbers
+# All photos are exported. Rights status lives in src/content/work.ts (rightsPending), not here:
+#   p01-p05, p47-p48: events, premiere and posters with third-party names or public figures (rights pending)
 i=0
 for f in $(cd "$SRC" && ls *.jpg); do
   i=$((i + 1))
   id=$(printf "p%02d" "$i")
-  if [ "$i" -le 5 ] || [ "$i" -ge 47 ]; then continue; fi
   sips -Z 640 -s format avif -s formatOptions 60 "$SRC/$f" --out "$OUT/photos/$id-640.avif" >/dev/null
   sips -Z 1280 -s format avif -s formatOptions 60 "$SRC/$f" --out "$OUT/photos/$id-1280.avif" >/dev/null
   sips -Z 640 -s format jpeg -s formatOptions 80 "$SRC/$f" --out "$OUT/photos/$id-640.jpg" >/dev/null
@@ -25,13 +23,12 @@ for f in $(cd "$SRC" && ls *.jpg); do
 done
 
 # Videos: v01..v23 follow the sorted order of the source MP4s.
-# Exports are muted, 540px wide, capped at 20 seconds. v17, v18 (celebrity event promos) and v23
-# (brand showroom footage) are excluded until rights and roles are verified.
+# Exports are muted, 540px wide, capped at 20 seconds. v17, v18 and v23 (event and showroom footage)
+# are exported too; their rights status is recorded in src/content/work.ts.
 j=0
 for f in $(cd "$SRC" && ls *.mp4); do
   j=$((j + 1))
   id=$(printf "v%02d" "$j")
-  case "$j" in 17|18|23) continue;; esac
   ffmpeg -v error -y -i "$SRC/$f" -an -vf "scale=540:-2" -t 20 -c:v libx264 -preset slow -crf 30 \
     -pix_fmt yuv420p -movflags +faststart "$OUT/video/$id.mp4"
   dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$SRC/$f")

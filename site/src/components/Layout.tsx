@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { initSmoothScroll } from "../lib/scroll";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 export function Layout() {
   const { pathname, hash } = useLocation();
@@ -18,7 +19,9 @@ export function Layout() {
       <a className="skip-link" href="#main">Skip to content</a>
       <Header />
       <main id="main" tabIndex={-1}>
-        <Outlet />
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </main>
       <Footer />
     </>

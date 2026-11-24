@@ -3,6 +3,7 @@ import sizes from "./media.generated.json";
 
 export type Photo = {
   id: string;
+  kind: "photo" | "poster";
   alt: string;
   width: number;
   height: number;
@@ -23,23 +24,29 @@ const base = "/media";
 const sizeMap = sizes as Record<string, { width: number; height: number }>;
 
 const photoAlt: Record<string, string> = {
+  event: "Guests and creators posing at an evening event with a branded backdrop.",
   creator: "Creators at a restaurant table during a collage session, with mood boards and printed photographs.",
   evening: "Guests at a restaurant table in warm evening light, sharing a meal and photographs.",
   portrait: "Portrait of a creator in a courtyard setting with blue patterned tiles and a mural.",
+  poster: "Event poster for a live appearance, with artwork and event details.",
 };
 
 function categoryFor(n: number) {
+  if (n <= 5) return "event";
   if (n <= 20) return "creator";
   if (n <= 40) return "evening";
-  return "portrait";
+  if (n <= 46) return "portrait";
+  return "poster";
 }
 
 function makePhoto(n: number): Photo {
   const id = `p${String(n).padStart(2, "0")}`;
   const size = sizeMap[id] ?? { width: 1280, height: 1600 };
+  const category = categoryFor(n);
   return {
     id,
-    alt: `${photoAlt[categoryFor(n)]} (image ${n})`,
+    kind: category === "poster" ? "poster" : "photo",
+    alt: `${photoAlt[category]} (image ${n})`,
     width: size.width,
     height: size.height,
     src: `${base}/photos/${id}-1280.jpg`,
@@ -49,8 +56,8 @@ function makePhoto(n: number): Photo {
   };
 }
 
-// Exported photos are 6 to 46. Photos 1-5 (premiere with third-party branding) and 47-48 (posters) are excluded.
-const photos = Array.from({ length: 41 }, (_, i) => makePhoto(i + 6));
+// All 48 source photos are exported. Rights status is recorded per collection in work.ts.
+const photos = Array.from({ length: 48 }, (_, i) => makePhoto(i + 1));
 const photoById = new Map(photos.map((p) => [p.id, p]));
 
 export function photo(id: string): Photo {
@@ -70,6 +77,8 @@ const clipAlt: Record<string, string> = {
   venue: "Short vertical film of food, drinks and interiors at a restaurant or café.",
   nightlife: "Vertical film of a night-time party with crowds and coloured lights.",
   creator: "Creator speaking to camera in a warm interior.",
+  event: "Event footage: a crowd and performance under stage lights.",
+  showroom: "Brand showroom footage: a car on display with a close view of its grille and badge.",
 };
 
 export function clip(id: string, kind: keyof typeof clipAlt = "venue"): Clip {

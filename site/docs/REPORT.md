@@ -10,7 +10,7 @@ Status: a working private preview. Not published. Not deployed. Not indexed.
 - Homepage sections 01–14, with the impact section replaced by an editorial statement (no metrics exist), and the brand-relationships section omitted (no verified relationships).
 - Intro (plays once per session; skipped for reduced motion and slow connections), full-screen menu with focus trap, Escape and scroll lock, hero showreel with native-control dialog.
 - Business and creator enquiry forms with validation, accessible errors and a demonstration state. Nothing is sent or stored unless an endpoint is configured.
-- Media: 41 photos and 20 clips exported as web formats. Original files untouched.
+- Media: all 48 photos and all 23 clips exported as web formats and used on the site. Original files untouched.
 
 ## 2. Creative direction
 
@@ -92,9 +92,13 @@ Harness note: in this environment the first screenshot after each navigation ren
 
 None of these is shown as a client, partner or endorsement.
 
-## 7. Media permissions and exclusions
+## 7. Media permissions
 
-Exported and used, but needing permission or releases before any public launch:
+Every source file is used. Those marked pending in `ASSET_INVENTORY.csv` are shown in the private preview only, under a "Rights pending" label, and need written permission before publication:
+
+- Photos 1–5 and 47–48, and clips 17, 18 and 23, on the "Events and appearances" collection and the Experiences page. They show a film premiere with apparent public figures, celebrity event posters with reservation phone numbers, and Mercedes-AMG showroom footage.
+
+Everything else needs permission or releases before any public launch:
 
 - **Every exported photo shows identifiable people.** Written releases or consent are needed.
 - **Venue names and signage are visible**, for example "Ba Ba Reeba", English House, Glasshouse Café and Azzurro. Venue permission is needed for use.
@@ -102,19 +106,14 @@ Exported and used, but needing permission or releases before any public launch:
 - **Third-party signage and logos** appear in some frames (for example "Savana" on an easel sign).
 - No music or audio is included; all exports are muted.
 
-Excluded from export (see `docs/ASSET_INVENTORY.csv`):
-
-- Photos 1–5: a film-premiere event with a third-party backdrop, sponsor logos and people who appear to be public figures.
-- Photos 47–48: event posters with third-party celebrity names and reservation phone numbers.
-- Clips 17–18: a celebrity event promo and related crowd footage.
-- Clip 23: brand showroom footage (Mercedes-AMG).
-
 ## 8. Asset inventory
 
-`docs/ASSET_INVENTORY.csv` maps all 71 source files: 61 exported (41 photos, 20 clips) and 10 excluded, with the reason for each exclusion.
+`docs/ASSET_INVENTORY.csv` maps all 71 source files to where each one is used and whether its rights are cleared for the preview: 48 photos and 23 clips, 10 of them pending.
 
-Photo categories used: creator sessions (p06–p20), evenings out (p21–p40), portrait sessions (p41–p46).
-Video categories used: venue reels (17 clips), nightlife reels (v01, v20), creator talk (v19), and the hero showreel cut from eight reels (v02, v12, v19, v21, v13, v10, v20, v16).
+Photo collections: events and appearances (p01–p05, p47–p48), creator sessions (p06–p20), evenings out (p21–p40), portrait sessions (p41–p46).
+Video collections: venue reels (17 clips), nightlife and creator reels (v01, v19, v20), events and appearances (v17, v18, v23), and the hero showreel cut from eight reels (v02, v12, v19, v21, v13, v10, v20, v16).
+
+Note: the performance numbers in section 3 were measured before the most recent layout and media changes. They need re-measuring.
 
 ## 9. Open decisions for the team
 

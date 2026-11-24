@@ -45,8 +45,9 @@ The originals in the project root are untouched. To rebuild the web media (about
 npm run media
 ```
 
-- Photos: AVIF and JPEG fallback at 640 and 1280 px, metadata stripped by re-encoding. Photos 1–5 and 47–48 are excluded (see `docs/REPORT.md`).
-- Video: muted H.264 at 540 px, capped at 20 s, with posters. Clips 17, 18 and 23 are excluded. A hero showreel (720 px and 540 px variants) is cut from eight reels.
+- Photos: AVIF and JPEG fallback at 640 and 1280 px, metadata stripped by re-encoding. All 48 source photos are exported.
+- Video: muted H.264 at 540 px, capped at 20 s, with posters. All 23 source clips are exported. A hero showreel (720 px and 540 px variants) is cut from eight reels.
+- Rights: photos 1–5, 47–48 and clips 17, 18, 23 are marked pending in `docs/ASSET_INVENTORY.csv`. They are for the private preview only until written permission is recorded.
 
 ## Changing content
 

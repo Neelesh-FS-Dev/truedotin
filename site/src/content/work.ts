@@ -1,17 +1,19 @@
 // Content collections, not client campaigns. No brand, client or outcome is claimed here.
 // status "draft" entries are kept out of the public site until names, roles and permissions are verified.
-import { photosIn, venueClips, nightlifeClips, creatorClip, type Clip, type Photo } from "./media";
+import { clip, photo, photosIn, venueClips, nightlifeClips, creatorClip, type Clip, type Photo } from "./media";
 
 export type Collection = {
   slug: string;
   title: string;
-  category: "Creator sessions" | "Hospitality" | "Portraits" | "Reels";
+  category: "Creator sessions" | "Hospitality" | "Portraits" | "Reels" | "Events";
   summary: string;
   cover: { kind: "photo"; photo: Photo } | { kind: "video"; clip: Clip };
   photos: Photo[];
   clips: Clip[];
   status: "published" | "draft";
   period: string;
+  // True when people, brands or posters in the collection still need written permission before publication.
+  rightsPending?: boolean;
 };
 
 const sessionPhotos = photosIn(6, 20);
@@ -19,6 +21,18 @@ const eveningPhotos = photosIn(21, 40);
 const portraitPhotos = photosIn(41, 46);
 
 export const collections: Collection[] = [
+  {
+    slug: "events-and-appearances",
+    title: "Events and appearances",
+    category: "Events",
+    summary: "Premiere nights, guest appearances, event posters and a brand showroom. Shown in the private preview for review; each person, brand and poster needs written permission before publication.",
+    cover: { kind: "photo", photo: photo("p01") },
+    photos: [...photosIn(1, 5), ...photosIn(47, 48)],
+    clips: [clip("v17", "event"), clip("v18", "event"), clip("v23", "showroom")],
+    status: "published",
+    period: "2025 — 2026",
+    rightsPending: true,
+  },
   {
     slug: "creator-sessions",
     title: "Creator sessions",

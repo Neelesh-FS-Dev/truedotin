@@ -29,12 +29,17 @@ export default function WorkDetail() {
       </section>
       <section className="prose-wide">
         <p className="body-lg">{c.summary}</p>
+        {c.rightsPending && (
+          <p className="notice" role="note">
+            <strong>Rights pending.</strong> This collection shows people, brands and posters that need written permission before publication. Preview only.
+          </p>
+        )}
         <p className="caption">Source: @truedotin Instagram content. Creators and guests shown are not represented by True.in unless stated.</p>
       </section>
       {c.photos.length > 0 && (
         <section className="case-grid" aria-label="Photographs">
           {c.photos.map((p) => (
-            <figure key={p.id} className="case-grid__cell">
+            <figure key={p.id} className={`case-grid__cell${p.kind === "poster" ? " case-grid__cell--poster" : ""}`}>
               <Photo photo={p} sizes="(max-width: 768px) 92vw, 45vw" />
             </figure>
           ))}

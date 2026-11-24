@@ -5,7 +5,7 @@ import { ClipVideo } from "../components/ClipVideo";
 import { publishedCollections, type Collection } from "../content/work";
 import { useDocumentMeta } from "../lib/meta";
 
-const filters: Array<"All" | Collection["category"]> = ["All", "Creator sessions", "Hospitality", "Portraits", "Reels"];
+const filters: Array<"All" | Collection["category"]> = ["All", "Creator sessions", "Hospitality", "Portraits", "Reels", "Events"];
 
 export default function Work() {
   useDocumentMeta("Work — True.in", "Content collections from the @truedotin feed: creator sessions, evenings out, portraits and short vertical films.");
@@ -38,7 +38,7 @@ export default function Work() {
                 )}
               </div>
               <div className="collection__text">
-                <p className="caption">{c.category} · {c.period}</p>
+                <p className="caption">{c.category} · {c.period}{c.rightsPending ? " · Rights pending" : ""}</p>
                 <h2 className="h2">{c.title}</h2>
                 <p>{c.summary}</p>
                 <span className="text-link">Open collection</span>

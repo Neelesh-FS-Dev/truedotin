@@ -27,6 +27,10 @@ body {
   overflow-x: hidden;
 }
 
+figure {
+  margin: 0;
+}
+
 img,
 video {
   display: block;
@@ -252,10 +256,21 @@ main {
 
 .prose-wide {
   padding: clamp(3rem, 2rem + 4vw, 6rem) var(--gutter);
-  max-width: 980px;
+  max-width: var(--max);
   margin: 0 auto;
   display: grid;
   gap: 1.5rem;
+}
+
+/* Prose shares the page's left edge with headings; the measure stays readable. */
+.prose-wide > * {
+  max-width: 62ch;
+}
+
+/* Reveal wraps a heading and its paragraph together; give that wrapper the same rhythm as the prose grid. */
+.prose-wide > div {
+  display: grid;
+  gap: 0.75rem;
 }
 
 .empty {
@@ -289,4 +304,11 @@ main {
 .hero__media picture,
 .hero__media video {
   width: 100%;
+}
+
+.notice {
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--color-text);
+  background: var(--color-surface);
+  max-width: 62ch;
 }

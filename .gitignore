@@ -1,0 +1,13 @@
+# Original source media in the project root. These stay on disk and are not versioned;
+# the web exports derived from them live in site/public/media.
+/truedotin_*.jpg
+/truedotin_*.jpeg
+/truedotin_*.png
+/truedotin_*.mp4
+/truedotin_*.mov
+
+# Tool output created by the Playwright MCP server during QA
+/.playwright-mcp/
+
+# OS noise
+.DS_Store

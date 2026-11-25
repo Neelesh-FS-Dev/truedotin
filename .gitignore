@@ -1,13 +1,33 @@
+# Dependencies and build output
+node_modules
+dist
+*.log
+
+# Lockfiles: this project uses npm (package-lock.json). Other lockfiles are tooling leftovers.
+yarn.lock
+pnpm-lock.yaml
+
 # Original source media in the project root. These stay on disk and are not versioned;
-# the web exports derived from them live in site/public/media.
+# the web exports derived from them live in public/media.
 /truedotin_*.jpg
 /truedotin_*.jpeg
 /truedotin_*.png
 /truedotin_*.mp4
 /truedotin_*.mov
 
+# Working QA captures from the layout audit; the committed screenshots are the reference set.
+docs/screenshots/audit/
+
 # Tool output created by the Playwright MCP server during QA
 /.playwright-mcp/
 
 # OS noise
 .DS_Store
+
+# Temporary output from scripts/build-media.mjs
+.media-tmp/
+
+# Third-party media and generated share image: never committed to the public repository
+public/media/
+public/og.jpg
+qa-out/

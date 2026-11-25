@@ -1,3 +1,0 @@
-# Independent concept preview: keep private until publication is authorised.
-User-agent: *
-Disallow: /

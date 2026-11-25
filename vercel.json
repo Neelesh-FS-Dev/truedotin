@@ -1,7 +1,6 @@
 {
-  "installCommand": "cd site && npm ci",
-  "buildCommand": "cd site && npm run build",
-  "outputDirectory": "site/dist",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     {

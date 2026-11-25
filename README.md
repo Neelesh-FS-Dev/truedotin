@@ -57,6 +57,6 @@ npm run media
 
 ## Deploy (Vercel)
 
-1. Import the `site/` folder as a project (or `vercel --cwd site`).
+1. Import this repository root as a Vercel project (or run `vercel` from the root).
 2. Build command `npm run build`, output directory `dist`. `vercel.json` already sets the build, output and SPA rewrites.
 3. The site ships `noindex` in the HTML and `Disallow: /` in `robots.txt`. Remove both only after True.in authorises publication. Add a canonical URL and a sitemap at that point, once the domain is confirmed.

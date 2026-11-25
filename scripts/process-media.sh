@@ -1,15 +1,22 @@
 #!/usr/bin/env bash
 # Builds web-ready media from the original source files in the project root.
-# Originals are never modified. Outputs go to site/public/media.
+# Originals are never modified. Outputs go to public/media.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SRC="$(cd "$HERE/../.." && pwd)"
+SRC="$(cd "$HERE/.." && pwd)"
 OUT="$HERE/../public/media"
+
+# Guard: refuse to run without the originals, so the existing exports are not deleted for nothing.
+if ! ls "$SRC"/*.jpg >/dev/null 2>&1 || ! ls "$SRC"/*.mp4 >/dev/null 2>&1; then
+  echo "error: no source .jpg/.mp4 files in $SRC; nothing to export. public/media left untouched." >&2
+  exit 1
+fi
+
 rm -rf "$OUT"
 mkdir -p "$OUT/photos" "$OUT/video"
 
-# Photos: p01..p48 follow the sorted order of the source JPGs (see docs/ASSET_INVENTORY.md).
+# Photos: p01..p48 follow the sorted order of the source JPGs (see docs/ASSET_INVENTORY.csv).
 # All photos are exported. Rights status lives in src/content/work.ts (rightsPending), not here:
 #   p01-p05, p47-p48: events, premiere and posters with third-party names or public figures (rights pending)
 i=0

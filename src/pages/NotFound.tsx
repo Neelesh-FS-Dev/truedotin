@@ -1,13 +1,17 @@
-import { Link } from "react-router";
-import { useDocumentMeta } from "../lib/meta";
+import { Link } from 'react-router';
+import { useDocumentMeta } from '../lib/meta';
 
 export default function NotFound() {
-  useDocumentMeta("Page not found — True.in", "The page you were looking for could not be found.");
+  useDocumentMeta('Page not found | True.in', 'This page is not in the True.in archive.');
   return (
-    <section className="page-intro">
-      <p className="eyebrow">404</p>
-      <h1 className="display display--md">This page is not here.</h1>
-      <p className="lede"><Link className="text-link" to="/">Back to the homepage</Link></p>
-    </section>
+    <div className="wrap page page--center">
+      <p className="mono eyebrow">404</p>
+      <h1 className="display page__title">This page is not in the archive.</h1>
+      <p className="page__lede">The link may be out of date. Try the work or the home page.</p>
+      <div className="row">
+        <Link to="/" className="cta cta--ink">Home</Link>
+        <Link to="/work" className="cta cta--outline">Work</Link>
+      </div>
+    </div>
   );
 }

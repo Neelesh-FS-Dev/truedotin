@@ -1,68 +1,89 @@
-import { Link, useParams } from "react-router";
-import { Photo } from "../components/Photo";
-import { ClipVideo } from "../components/ClipVideo";
-import { collectionBySlug, publishedCollections } from "../content/work";
-import { useDocumentMeta } from "../lib/meta";
-import NotFound from "./NotFound";
+import { Link, useParams } from 'react-router';
+import { CampaignFigure, archiveNumber } from '../components/CampaignFigure';
+import { Photo, Reel } from '../components/Media';
+import { CAMPAIGNS, CAMPAIGN_BY_SLUG } from '../content/campaigns';
+import { MEDIA } from '../content/media.generated';
+import { useDocumentMeta } from '../lib/meta';
+import NotFound from './NotFound';
 
 export default function WorkDetail() {
-  const { slug = "" } = useParams();
-  const c = collectionBySlug(slug);
-  useDocumentMeta(c ? `${c.title} — True.in` : "Not found — True.in", c?.summary ?? "This collection could not be found.");
-  if (!c) return <NotFound />;
+  const { slug = '' } = useParams();
+  const campaign = CAMPAIGN_BY_SLUG.get(slug);
+  useDocumentMeta(
+    campaign ? `${campaign.title} | True.in` : 'Not found | True.in',
+    campaign ? campaign.description : 'This page is not in the True.in archive.',
+  );
+  if (!campaign) return <NotFound />;
 
-  const related = publishedCollections.filter((x) => x.slug !== c.slug).slice(0, 3);
-  const cover = c.cover.kind === "photo" ? c.cover.photo : null;
+  const index = CAMPAIGNS.indexOf(campaign);
+  const prev = CAMPAIGNS[(index - 1 + CAMPAIGNS.length) % CAMPAIGNS.length];
+  const next = CAMPAIGNS[(index + 1) % CAMPAIGNS.length];
+  const related = CAMPAIGNS.filter((c) => c.category === campaign.category && c.slug !== campaign.slug).slice(0, 3);
+  const [hero, ...gallery] = campaign.media;
+  if (!hero) return <NotFound />;
 
   return (
-    <>
-      <section className="case-hero">
-        {cover ? (
-          <Photo photo={cover} sizes="100vw" priority className="case-hero__media" />
-        ) : c.cover.kind === "video" ? (
-          <ClipVideo src={c.cover.clip.src} poster={c.cover.clip.poster} label={c.cover.clip.alt} autoPlay className="case-hero__media" />
-        ) : null}
-        <div className="case-hero__copy">
-          <p className="eyebrow">{c.category} · {c.period}</p>
-          <h1 className="display display--md">{c.title}</h1>
-        </div>
-      </section>
-      <section className="prose-wide">
-        <p className="body-lg">{c.summary}</p>
-        {c.rightsPending && (
-          <p className="notice" role="note">
-            <strong>Rights pending.</strong> This collection shows people, brands and posters that need written permission before publication. Preview only.
-          </p>
+    <article className="wrap page detail">
+      <nav aria-label="Breadcrumb" className="mono crumbs">
+        <Link to="/work">Work</Link> / <span>{campaign.category}</span>
+      </nav>
+      <header className="page__head">
+        <p className="mono eyebrow">{archiveNumber(campaign)} · {campaign.category} · {campaign.date}</p>
+        <h1 className="display page__title">{campaign.title}</h1>
+        <p className="page__lede">{campaign.description}</p>
+      </header>
+
+      <div className="detail__hero">
+        {MEDIA[hero].kind === 'video' ? (
+          <Reel id={hero} label={campaign.title} sizes="(min-width: 1024px) 80vw, 100vw" showToggle />
+        ) : (
+          <Photo id={hero} alt={campaign.title} sizes="(min-width: 1024px) 80vw, 100vw" eager />
         )}
-        <p className="caption">Source: @truedotin Instagram content. Creators and guests shown are not represented by True.in unless stated.</p>
-      </section>
-      {c.photos.length > 0 && (
-        <section className="case-grid" aria-label="Photographs">
-          {c.photos.map((p) => (
-            <figure key={p.id} className={`case-grid__cell${p.kind === "poster" ? " case-grid__cell--poster" : ""}`}>
-              <Photo photo={p} sizes="(max-width: 768px) 92vw, 45vw" />
-            </figure>
-          ))}
+      </div>
+
+      {gallery.length > 0 && (
+        <section aria-labelledby="gallery-title" className="detail__gallery">
+          <h2 id="gallery-title" className="mono eyebrow">Media gallery · {campaign.media.length} frames</h2>
+          <ul className="detail__grid">
+            {gallery.map((id, i) => (
+              <li key={id}>
+                {MEDIA[id].kind === 'video' ? (
+                  <Reel id={id} label={`${campaign.title}, frame ${i + 2}`} sizes="(min-width: 1024px) 30vw, 46vw" showToggle />
+                ) : (
+                  <Photo id={id} alt={`${campaign.title}, frame ${i + 2}`} sizes="(min-width: 1024px) 30vw, 46vw" />
+                )}
+                <span className="mono">Frame {String(i + 2).padStart(2, '0')}</span>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
-      {c.clips.length > 0 && (
-        <section className="case-reels" aria-label="Films">
-          {c.clips.map((v) => (
-            <figure key={v.id} className="case-reels__cell">
-              <ClipVideo src={v.src} poster={v.poster} label={v.alt} controls className="case-reels__video" />
-            </figure>
-          ))}
+
+      <p className="detail__source mono">
+        Media is third-party or rights-pending unless confirmed. Visible people are not described as staff or represented talent.
+      </p>
+
+      {related.length > 0 && (
+        <section aria-labelledby="related-title" className="section">
+          <h2 id="related-title" className="display section__title">More {campaign.category.toLowerCase()}.</h2>
+          <div className="archive">
+            {related.map((c) => (
+              <CampaignFigure key={c.slug} campaign={c} className="archive__item" style={{ gridColumn: 'span 4' }} />
+            ))}
+          </div>
         </section>
       )}
-      <section className="related" aria-labelledby="related-title">
-        <h2 id="related-title" className="h2">More from the feed</h2>
-        <ul className="related__list">
-          {related.map((r) => (
-            <li key={r.slug}><Link to={`/work/${r.slug}`} className="text-link">{r.title}</Link></li>
-          ))}
-        </ul>
-        <p className="section-foot"><Link className="button button--solid" to="/contact">Start a project</Link></p>
-      </section>
-    </>
+
+      <nav className="pager" aria-label="Campaign navigation">
+        <Link to={`/work/${prev?.slug ?? ''}`} className="pager__link">
+          <span className="mono">← Previous</span>
+          <span>{prev?.title}</span>
+        </Link>
+        <Link to={`/work/${next?.slug ?? ''}`} className="pager__link pager__link--next">
+          <span className="mono">Next →</span>
+          <span>{next?.title}</span>
+        </Link>
+      </nav>
+    </article>
   );
 }

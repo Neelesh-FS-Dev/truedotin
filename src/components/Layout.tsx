@@ -1,27 +1,34 @@
-import { useEffect } from "react";
-import { Outlet, useLocation } from "react-router";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
-import { initSmoothScroll } from "../lib/scroll";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { useEffect, useRef } from 'react';
+import { Outlet, useLocation } from 'react-router';
+import { Masthead } from './Masthead';
+import { Footer } from './Footer';
+import { startSmoothScroll, scrollToTop } from '../lib/scroll';
 
 export function Layout() {
-  const { pathname, hash } = useLocation();
+  const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+  const firstRender = useRef(true);
 
-  useEffect(() => initSmoothScroll(), []);
+  useEffect(() => startSmoothScroll(), []);
 
+  // On route change: jump to top (unless a hash is present), then move focus to the page for keyboard users.
   useEffect(() => {
-    if (!hash) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, [pathname, hash]);
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    if (!location.hash) scrollToTop();
+    mainRef.current?.focus({ preventScroll: true });
+  }, [location.pathname, location.hash]);
 
   return (
     <>
-      <a className="skip-link" href="#main">Skip to content</a>
-      <Header />
-      <main id="main" tabIndex={-1}>
-        <ErrorBoundary>
-          <Outlet />
-        </ErrorBoundary>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Masthead />
+      <main id="main" ref={mainRef} tabIndex={-1}>
+        <Outlet />
       </main>
       <Footer />
     </>

@@ -1,15 +1,14 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-// Sets title and description per route. Site-wide robots are noindex while the preview is private.
+// Keeps the document title and description in step with the current route.
 export function useDocumentMeta(title: string, description: string): void {
   useEffect(() => {
     document.title = title;
-    let tag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (!tag) {
-      tag = document.createElement("meta");
-      tag.name = "description";
-      document.head.appendChild(tag);
-    }
-    tag.content = description;
+    const tag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    const og = document.querySelector<HTMLMetaElement>('meta[property="og:title"]');
+    const ogDesc = document.querySelector<HTMLMetaElement>('meta[property="og:description"]');
+    tag?.setAttribute('content', description);
+    og?.setAttribute('content', title);
+    ogDesc?.setAttribute('content', description);
   }, [title, description]);
 }

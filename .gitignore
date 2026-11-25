@@ -23,3 +23,21 @@ docs/screenshots/audit/
 
 # OS noise
 .DS_Store
+
+# Temporary output from scripts/build-media.mjs
+.media-tmp/
+
+# Third-party media and generated share image: never committed to the public repository
+public/media/
+public/og.jpg
+qa-out/
+
+# Local-only material from earlier work: third-party media, old screenshots, inventory with notes on identifiable people
+media-pending/
+docs/screenshots/
+docs/ASSET_INVENTORY.csv
+
+# Secrets and local platform links: never committed
+.env
+.env.*
+.vercel

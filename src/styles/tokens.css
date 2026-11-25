@@ -1,32 +1,44 @@
+@font-face {
+  font-family: 'General Sans';
+  src: url('../assets/fonts/GeneralSans-Variable.woff2') format('woff2');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  /* Colour: near-black, warm off-white, charcoal, silver. No accent colour is forced. */
-  --color-bg: #0a0a0a;
-  --color-surface: #222222;
-  --color-text: #f5f4ef;
-  --color-text-muted: #a3a3a3;
-  --color-border: rgb(245 244 239 / 0.16);
-  --color-paper: #f5f4ef;
-  --color-ink: #0a0a0a;
-  --color-focus: #f5f4ef;
-  --color-error: #ffb4a8;
+  --ink: #111111;
+  --paper: #f4f2eb;
+  --lime: #dfff00;
+  --white: #ffffff;
+  --grey: #777770;
+  --grey-text: #5c5c56; /* #777770 fails AA for small text on paper; used for rules only */
+  --surface: #1b1b1b;
+  --rule: #d9d7d0;
 
-  /* Type */
-  --font-display: "Instrument Serif", "Times New Roman", serif;
-  --font-ui: "Inter Tight Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --fs-display: clamp(3rem, 1.2rem + 7vw, 8.5rem);
-  --fs-display-md: clamp(2.4rem, 1rem + 4.2vw, 5.4rem);
-  --fs-h2: clamp(1.9rem, 1.2rem + 2.2vw, 3.2rem);
-  --fs-h3: clamp(1.3rem, 1.05rem + 0.8vw, 1.7rem);
-  --fs-lede: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
-  --fs-body: 1rem;
-  --fs-caption: 0.8rem;
+  --font-display: 'Bricolage Grotesque', 'General Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'General Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Layout */
-  --gutter: clamp(1.25rem, 0.6rem + 2.4vw, 3.5rem);
-  --max: 1560px;
-  --section-y: clamp(5rem, 3rem + 7vw, 10rem);
+  --fs-hero: clamp(2.625rem, 1.2rem + 6.4vw, 9rem);
+  --fs-h2: clamp(2.125rem, 1.1rem + 3.6vw, 5.5rem);
+  --fs-h3: clamp(1.625rem, 1.1rem + 1.4vw, 2.5rem);
+  --fs-campaign: clamp(1.5rem, 1.2rem + 1vw, 2.5rem);
+  --fs-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.1875rem);
+  --fs-meta: clamp(0.6875rem, 0.66rem + 0.12vw, 0.8125rem);
 
-  /* Motion */
-  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --dur: 0.5s;
+  --gutter: clamp(20px, 4vw, 80px);
+  --max: 1600px;
+  --gap: clamp(12px, 1.6vw, 24px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 180ms;
+  --dur-hover: 300ms;
+  --dur-media: 600ms;
+  --header-h: 72px;
+}
+
+@media (max-width: 1023px) {
+  :root { --header-h: 64px; }
 }

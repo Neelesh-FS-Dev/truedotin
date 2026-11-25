@@ -36,3 +36,8 @@ qa-out/
 media-pending/
 docs/screenshots/
 docs/ASSET_INVENTORY.csv
+
+# Secrets and local platform links: never committed
+.env
+.env.*
+.vercel

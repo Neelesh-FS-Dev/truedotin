@@ -31,3 +31,8 @@ docs/screenshots/audit/
 public/media/
 public/og.jpg
 qa-out/
+
+# Local-only material from earlier work: third-party media, old screenshots, inventory with notes on identifiable people
+media-pending/
+docs/screenshots/
+docs/ASSET_INVENTORY.csv
